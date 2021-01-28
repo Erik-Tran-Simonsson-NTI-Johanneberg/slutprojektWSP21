@@ -1,0 +1,11 @@
+h2 #{session[:username]}'s todos:
+
+form method="get" action="/todos/new"
+    input type="submit" value="Create New Todo"
+
+- todos.each do |todo|
+    p = todo["content"]
+    form method="get" action="todos/#{todo['todos_id']}/edit"
+        input type="submit" value="Edit"
+    form method="post" action="todos/#{todo['todos_id']}/delete"
+        input type="submit" value="Delete"
