@@ -1,0 +1,7 @@
+h2 Update the recipe
+
+form action="/recipe/#{all_data['recipe_id']}/edit" method="post"
+    input type="text" name="recipe_name" value="#{all_data['recipe_name']}" placeholder="Name"
+    input type="text" name="ingredients" value="#{all_data['ingredients']}" placeholder="Ingredients"
+    input type="text" name="instructions" value="#{all_data['instructions']}" placeholder="Instructions"
+    input type="submit" value="Update The Recipe!"

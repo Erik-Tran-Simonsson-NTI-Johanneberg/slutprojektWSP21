@@ -1,5 +1,8 @@
-p #{recipe_name}
-p #{user_id}
-p #{date_created}
-p #{ingredients}
-p #{instructions}
+h1 #{all_data}
+
+p #{all_data["recipe_name"]}
+p Created by #{all_data["user_id"]}
+p Date created #{all_data["date_created"]}
+p Last updated #{all_data["date_updated"]}
+p Ingredients required: #{all_data["ingredients"]}
+p Instructions #{all_data["instructions"]}

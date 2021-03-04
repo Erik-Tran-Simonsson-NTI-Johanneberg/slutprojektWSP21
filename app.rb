@@ -2,6 +2,7 @@ require "sinatra"
 require "slim"
 require "sqlite3"
 require "bcrypt"
+require 'date'
 require_relative "./model.rb"
 
 enable :sessions
@@ -20,7 +21,7 @@ end
 post("/recipe/new") do
   recipe_name = params[:recipe_name]
   user_id = 1
-  date_created = 1
+  date_created = Time.now.getutc.to_s
   ingredients = params[:ingredients]
   instructions = params[:instructions]
   
@@ -28,12 +29,30 @@ post("/recipe/new") do
   redirect("/")
 end
 
-get('/recipe/:id') do  
+get('/recipe/:id') do 
   recipe_id = params[:id].to_i
-  recipe_name = select_all_data_from_recipe(recipe_id)[0]
-  user_id = select_all_data_from_recipe(recipe_id)[1]
-  date_created = select_all_data_from_recipe(recipe_id)[2]
-  ingredients = select_all_data_from_recipe(recipe_id)[3]
-  instructions = select_all_data_from_recipe(recipe_id)[4]
-  slim(:"recipe/show", locals:{recipe_name:recipe_name, user_id:user_id, date_created:date_created, ingredients:ingredients, instructions:instructions})
+  all_data = select_everything_from_recipe_id(recipe_id)
+  slim(:"recipe/show", locals:{all_data:all_data})
+end
+
+get('/recipe/:id/edit') do
+  recipe_id = params[:id].to_i
+  all_data = select_everything_from_recipe_id(recipe_id)
+  slim(:"recipe/edit", locals:{all_data:all_data})
+end
+
+post("/recipe/:id/edit") do
+  recipe_id = params[:id].to_i
+  recipe_name = params[:recipe_name]
+  date_updated = Time.now.getutc.to_s
+  ingredients = params[:ingredients]
+  instructions = params[:instructions]  
+  update_recipes(recipe_name, date_updated, ingredients, instructions, recipe_id)
+  redirect("/")
+end
+
+get("/recipe/:id/delete") do
+  recipe_id = params[:id].to_i
+  delete_recipe(recipe_id)
+  redirect('/')
 end

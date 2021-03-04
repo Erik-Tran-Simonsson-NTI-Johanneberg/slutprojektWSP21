@@ -5,5 +5,4 @@ ol
     li 
       a href="recipe/#{recipe['recipe_id']}" #{recipe["recipe_name"]}
       a href="recipe/#{recipe['recipe_id']}/edit" Uppdate recipe
-      form method="post" action="recipe/#{recipe['recipe_id']}/delete"
-        input type="submit" value="Delete recipe"
+      a href="recipe/#{recipe['recipe_id']}/delete" Delete recipe
