@@ -56,3 +56,46 @@ get("/recipe/:id/delete") do
   delete_recipe(recipe_id)
   redirect('/')
 end
+
+get("/register") do
+  slim(:"register")
+end
+
+post("/users/new") do
+  username = params[:username]
+  password_input = params[:password_input]
+  password_confirmation = params[:password_confirmation]
+
+  if password_input == password_confirmation
+    password = password_input + "saltysaltysaltcandywithplentyofsalt"
+    password_encrypted = BCrypt::Password.create(password)
+    create_new_user(username, password_encrypted)
+    redirect("/")
+
+  else
+    "The passwords do not match!"
+  end
+end
+
+get("/login") do
+  slim(:login)
+end
+
+post("/login") do
+  username = params[:username]
+  password_input = params[:password_input]
+  password = password_input + "saltysaltysaltcandywithplentyofsalt"
+
+  user_information = select_user_information(username)
+  user_id = user_information["user_id"]
+  password_encrypted = user_information["password"]
+
+  if BCrypt::Password.new(password_encrypted) == password
+    # session[:user_id] = user_id
+    # session[:username] = username
+    "Welcome in!"
+  
+  else
+    "Incorrect username or password, please try again."
+  end
+end

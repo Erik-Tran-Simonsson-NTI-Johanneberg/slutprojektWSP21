@@ -24,9 +24,14 @@ def update_recipes(recipe_name, date_updated, ingredients, instructions, recipe_
     return get_db().execute("UPDATE recipes SET recipe_name = ?, date_updated = ?, ingredients = ?, instructions = ? WHERE recipe_id = ?", recipe_name, date_updated, ingredients, instructions, recipe_id)
 end
 
-# it cant find the recipe_id, it works when i give it a defined id in the function...
-# NOT IT WORKS, IDK WHYYY RFKOPAÖLGJDÖAIZKOGBJHDFXIOÖÄSZHBNFOSZXP
-
 def delete_recipe(recipe_id)
     return get_db().execute("DELETE FROM recipes WHERE recipe_id = ?", recipe_id)
+end
+
+def create_new_user(username, password)
+    return get_db().execute("INSERT INTO users (username, password) VALUES (?, ?)", username, password)
+end
+
+def select_user_information(username)
+    return get_db_as_hash().execute("SELECT * FROM users WHERE username = ?", username).first
 end
