@@ -7,8 +7,11 @@ html lang="en"
     title Recipe Website
   body
     nav
-      a href="/register" Register
-      a href="/login" Login
+      - if session[:user_id] != nil
+        a href="/logout" Logout
+      - else
+        a href="/register" Register
+        a href="/login" Login
     h1 Welcome to Todos!
 
     == yield

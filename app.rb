@@ -7,7 +7,7 @@ require_relative "./model.rb"
 
 enable :sessions
 
-db = get_db()
+salt = "saltysaltysaltcandywithplentyofsalt"
 
 get("/") do
   recipes = select_everything_from_recipes()
@@ -20,7 +20,7 @@ end
 
 post("/recipe/new") do
   recipe_name = params[:recipe_name]
-  user_id = 1
+  user_id = session[:user_id]
   date_created = Time.now.getutc.to_s
   ingredients = params[:ingredients]
   instructions = params[:instructions]
@@ -32,7 +32,7 @@ end
 get('/recipe/:id') do 
   recipe_id = params[:id].to_i
   all_data = select_everything_from_recipe_id(recipe_id)
-  slim(:"recipe/show", locals:{all_data:all_data})
+  slim(:"recipe/index", locals:{all_data:all_data})
 end
 
 get('/recipe/:id/edit') do
@@ -67,7 +67,7 @@ post("/users/new") do
   password_confirmation = params[:password_confirmation]
 
   if password_input == password_confirmation
-    password = password_input + "saltysaltysaltcandywithplentyofsalt"
+    password = password_input + salt
     password_encrypted = BCrypt::Password.create(password)
     create_new_user(username, password_encrypted)
     redirect("/")
@@ -84,18 +84,24 @@ end
 post("/login") do
   username = params[:username]
   password_input = params[:password_input]
-  password = password_input + "saltysaltysaltcandywithplentyofsalt"
+  password = password_input + salt
 
+  if username_exists(username) == []
+    "Incorrect username or password, please try again."
+  else
   user_information = select_user_information(username)
   user_id = user_information["user_id"]
   password_encrypted = user_information["password"]
-
-  if BCrypt::Password.new(password_encrypted) == password
-    # session[:user_id] = user_id
-    # session[:username] = username
-    "Welcome in!"
-  
-  else
-    "Incorrect username or password, please try again."
+    if BCrypt::Password.new(password_encrypted) == password
+      session[:user_id] = user_id
+      redirect("/")
+    else
+      "Incorrect username or password, please try again."
+    end
   end
+end
+
+get("/logout") do
+    session.destroy
+  redirect("/")
 end

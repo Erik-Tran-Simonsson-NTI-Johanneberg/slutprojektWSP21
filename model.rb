@@ -32,6 +32,10 @@ def create_new_user(username, password)
     return get_db().execute("INSERT INTO users (username, password) VALUES (?, ?)", username, password)
 end
 
+def username_exists(username)
+    return get_db_as_hash().execute("SELECT * FROM users WHERE username = ?", username)
+end
+
 def select_user_information(username)
     return get_db_as_hash().execute("SELECT * FROM users WHERE username = ?", username).first
 end
