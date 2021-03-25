@@ -11,7 +11,7 @@ salt = "saltysaltysaltcandywithplentyofsalt"
 
 get("/") do
   recipes = select_everything_from_recipes()
-  slim(:"frontpage", locals:{recipes:recipes})
+  slim(:"index", locals:{recipes:recipes})
 end
 
 get("/recipe/new") do
@@ -78,7 +78,7 @@ post("/users/new") do
 end
 
 get("/login") do
-  slim(:login)
+  slim(:"login")
 end
 
 post("/login") do
