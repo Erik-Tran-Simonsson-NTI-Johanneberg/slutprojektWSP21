@@ -32,7 +32,8 @@ end
 get('/recipe/:id') do 
   recipe_id = params[:id].to_i
   all_data = select_everything_from_recipe_id(recipe_id)
-  slim(:"recipe/index", locals:{all_data:all_data})
+  all_likes = select_all_user_ids_from_like_id(recipe_id)
+  slim(:"recipe/index", locals:{all_data:all_data, all_likes:all_likes})
 end
 
 get('/recipe/:id/edit') do
@@ -54,6 +55,18 @@ end
 get("/recipe/:id/delete") do
   recipe_id = params[:id].to_i
   delete_recipe(recipe_id)
+  redirect('/')
+end
+
+get("/recipe/:id/like") do
+  recipe_id = params[:id].to_i
+  add_like(recipe_id, session[:user_id])
+  redirect('/')
+end
+
+get("/recipe/:id/unlike") do
+  recipe_id = params[:id].to_i
+  remove_like(recipe_id, session[:user_id])
   redirect('/')
 end
 

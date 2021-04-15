@@ -28,6 +28,18 @@ def delete_recipe(recipe_id)
     return get_db().execute("DELETE FROM recipes WHERE recipe_id = ?", recipe_id)
 end
 
+def select_all_user_ids_from_like_id(recipe_id)
+    return get_db().execute("SELECT user_id FROM likes WHERE recipe_id = ?", recipe_id)
+end
+
+def add_like(recipe_id, user_id)
+    return get_db().execute("INSERT INTO likes (recipe_id, user_id) VALUES (?, ?)", recipe_id, user_id)
+end
+
+def remove_like(recipe_id, user_id)
+    return get_db().execute("DELETE FROM likes WHERE recipe_id = ? AND user_id = ?", recipe_id, user_id)
+end
+
 def create_new_user(username, password)
     return get_db().execute("INSERT INTO users (username, password) VALUES (?, ?)", username, password)
 end

@@ -7,6 +7,10 @@ p Last updated #{all_data["date_updated"]}
 p Ingredients required: #{all_data["ingredients"]}
 p Instructions #{all_data["instructions"]}
 
-a href="/like" SMASH THIS LIKE BUTTON TO APROVE!!!
+- if session[:user_id] != all_data["user_id"] && session[:user_id] != nil
+    - if all_likes.include? [session[:user_id]]
+        a href="#{all_data["recipe_id"]}/unlike" SMASH THIS UNLIKE BUTTON TO NOT APROVE!!!
+    - else
+        a href="#{all_data["recipe_id"]}/like" SMASH THIS LIKE BUTTON TO APROVE!!!
 
-p amount of likes
+p Current amount of likes: #{all_likes.length}
