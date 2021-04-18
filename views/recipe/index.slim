@@ -8,6 +8,7 @@ p Ingredients required: #{all_data["ingredients"]}
 p Instructions: #{all_data["instructions"]}
 
 - if session[:user_id] != all_data["user_id"] && session[:user_id] != nil
+    - session[:redirect_link] = "/recipe/#{all_data['recipe_id']}"
     - if all_likes.include? [session[:user_id]]
         a href="#{all_data["recipe_id"]}/unlike" SMASH THIS UNLIKE BUTTON TO NOT APROVE!!!
     - else

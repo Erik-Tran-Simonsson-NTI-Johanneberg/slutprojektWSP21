@@ -46,7 +46,7 @@ get('/recipe/:id/edit') do
   slim(:"recipe/edit", locals:{all_data:all_data})
 end
 
-post("/recipe/:id/edit") do
+post("/recipe/:id/update") do
   recipe_id = params[:id].to_i
   recipe_name = params[:recipe_name]
   date_updated = Time.now.getutc.to_s
@@ -70,13 +70,13 @@ end
 get("/recipe/:id/like") do
   recipe_id = params[:id].to_i
   add_like(recipe_id, session[:user_id])
-  redirect('/')
+  redirect(session[:redirect_link])
 end
 
 get("/recipe/:id/unlike") do
   recipe_id = params[:id].to_i
   remove_like(recipe_id, session[:user_id])
-  redirect('/')
+  redirect(session[:redirect_link])
 end
 
 get("/register") do
@@ -111,11 +111,12 @@ post("/login") do
   if username_exists(username) == []
     "Incorrect username or password, please try again."
   else
-  user_information = select_user_information(username)
-  user_id = user_information["user_id"]
-  password_encrypted = user_information["password"]
+    user_information = select_user_information(username)
+    user_id = user_information["user_id"]
+    password_encrypted = user_information["password"]
     if BCrypt::Password.new(password_encrypted) == password
       session[:user_id] = user_id
+      session[:username] = username
       redirect("/")
     else
       "Incorrect username or password, please try again."

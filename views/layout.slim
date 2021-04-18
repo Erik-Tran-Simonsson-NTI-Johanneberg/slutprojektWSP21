@@ -6,11 +6,12 @@ html lang="en"
     link rel="stylesheet" href="/css/style.css"/
     title Recipe Website
   body
-    nav
+    a href="/" Home
+    nav class="navbar"
       - if session[:user_id] != nil
         a href="/logout" Logout
       - else
-        a href="/register" Register
+        a href="/register" No account? Create one here!
         a href="/login" Login
 
     == yield

@@ -1,12 +1,31 @@
-nav {
+a {
+  text-decoration: none;
+}
+
+.navbar {
   font-family: Arial, Helvetica, sans-serif;
   text-transform: uppercase;
   text-decoration: none;
   font-size: 1.2em;
   font-weight:800;
-  background: lightsalmon;
+  background: mediumaquamarine;
   height: 10vh;
   display:flex;
   justify-content:space-around;
   align-items:center;
 }
+
+h2 {
+  margin-bottom: 2rem;
+}
+
+  ul li {
+    list-style: none;
+    margin-bottom: 3rem;
+  }
+
+    ul li nav {
+      width: 15vw;
+      display: flex;
+      justify-content: space-between;
+    }
