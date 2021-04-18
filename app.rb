@@ -24,9 +24,13 @@ post("/recipe/new") do
   date_created = Time.now.getutc.to_s
   ingredients = params[:ingredients]
   instructions = params[:instructions]
-  
-  insert_into_recipes(recipe_name, user_id, date_created, ingredients, instructions)
-  redirect("/")
+
+  if recipe_name != "" && ingredients != "" && instructions != ""
+    insert_into_recipes(recipe_name, user_id, date_created, ingredients, instructions)
+    redirect("/")
+  else
+    "Please leave no fields empty."
+  end
 end
 
 get('/recipe/:id') do 
@@ -47,9 +51,14 @@ post("/recipe/:id/edit") do
   recipe_name = params[:recipe_name]
   date_updated = Time.now.getutc.to_s
   ingredients = params[:ingredients]
-  instructions = params[:instructions]  
-  update_recipes(recipe_name, date_updated, ingredients, instructions, recipe_id)
-  redirect("/")
+  instructions = params[:instructions] 
+  
+  if recipe_name != "" && ingredients != "" && instructions != ""
+    update_recipes(recipe_name, date_updated, ingredients, instructions, recipe_id)
+    redirect("/")
+  else
+    "Please leave no fields empty."
+  end
 end
 
 get("/recipe/:id/delete") do

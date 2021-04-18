@@ -4,8 +4,8 @@
   h1 Welcome #{session[:user_id]}
   a href="/recipe/new" Create a new recipe
 
-ol
-  - recipes.each do |recipe|
+ul
+  - recipes.reverse_each do |recipe|
     / h1 recipe #{recipe}
     / h1 Current id is #{recipe['user_id']}
     li 

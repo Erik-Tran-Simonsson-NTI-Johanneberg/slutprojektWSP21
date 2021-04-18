@@ -1,11 +1,11 @@
-h1 #{all_data}
+/ h1 #{all_data}
 
 p #{all_data["recipe_name"]}
-p Created by #{all_data["user_id"]}
-p Date created #{all_data["date_created"]}
-p Last updated #{all_data["date_updated"]}
+p Created by: #{all_data["user_id"]}
+p Date created: #{all_data["date_created"]}
+p Last updated: #{all_data["date_updated"]}
 p Ingredients required: #{all_data["ingredients"]}
-p Instructions #{all_data["instructions"]}
+p Instructions: #{all_data["instructions"]}
 
 - if session[:user_id] != all_data["user_id"] && session[:user_id] != nil
     - if all_likes.include? [session[:user_id]]
