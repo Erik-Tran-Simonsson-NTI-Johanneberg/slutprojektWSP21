@@ -9,9 +9,9 @@ html lang="en"
     a href="/" Home
     nav class="navbar"
       - if session[:user_id] != nil
-        a href="/logout" Logout
+        a href="/user/logout" Logout
       - else
-        a href="/register" No account? Create one here!
-        a href="/login" Login
+        a href="/user/new" No account? Create one here!
+        a href="/user/login" Login
 
     == yield

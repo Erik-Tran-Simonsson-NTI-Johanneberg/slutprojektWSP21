@@ -1,7 +1,9 @@
 - require_relative "../model.rb"
 
 - if session[:user_id] != nil
-  h1 Welcome #{session[:username]}
+  h1 Welcome #{session[:username]}!
+  - if session[:admin] == "true"
+    h1 You are an admin, you can now edit and delete posts.
   h2
     a href="/recipe/new" Create a new recipe
 
@@ -12,7 +14,7 @@ ul
     li 
       h3
         a href="recipe/#{recipe['recipe_id']}" #{recipe["recipe_name"]}
-      - if recipe['user_id'] == session[:user_id]
+      - if recipe['user_id'] == session[:user_id] || session[:admin] == "true"
         nav
           a href="recipe/#{recipe['recipe_id']}/edit" Uppdate recipe
           a href="recipe/#{recipe['recipe_id']}/delete" Delete recipe

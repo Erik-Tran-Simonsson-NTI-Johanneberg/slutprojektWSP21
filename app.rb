@@ -7,8 +7,13 @@ require_relative "./model.rb"
 
 enable :sessions
 
+include Model
+
 salt = "saltysaltysaltcandywithplentyofsalt"
 
+# Displays frontpage
+# 
+# @see Model#select_everything_from_recipes
 get("/") do
   recipes = select_everything_from_recipes()
   slim(:"index", locals:{recipes:recipes})
@@ -18,7 +23,7 @@ get("/recipe/new") do
   slim(:"recipe/new")
 end
 
-post("/recipe/new") do
+post("/recipe") do
   recipe_name = params[:recipe_name]
   user_id = session[:user_id]
   date_created = Time.now.getutc.to_s
@@ -79,11 +84,11 @@ get("/recipe/:id/unlike") do
   redirect(session[:redirect_link])
 end
 
-get("/register") do
-  slim(:"register")
+get("/user/new") do
+  slim(:"user/new")
 end
 
-post("/users/new") do
+post("/user") do
   username = params[:username]
   password_input = params[:password_input]
   password_confirmation = params[:password_confirmation]
@@ -99,11 +104,11 @@ post("/users/new") do
   end
 end
 
-get("/login") do
-  slim(:"login")
+get("/user/login") do
+  slim(:"user/login")
 end
 
-post("/login") do
+post("/user/login") do
   username = params[:username]
   password_input = params[:password_input]
   password = password_input + salt
@@ -117,6 +122,9 @@ post("/login") do
     if BCrypt::Password.new(password_encrypted) == password
       session[:user_id] = user_id
       session[:username] = username
+      if user_information["is_admin"] == "true"
+        session[:admin] = "true"
+      end
       redirect("/")
     else
       "Incorrect username or password, please try again."
@@ -124,7 +132,7 @@ post("/login") do
   end
 end
 
-get("/logout") do
+get("/user/logout") do
     session.destroy
   redirect("/")
 end
