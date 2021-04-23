@@ -93,14 +93,17 @@ post("/user") do
   password_input = params[:password_input]
   password_confirmation = params[:password_confirmation]
 
-  if password_input == password_confirmation
-    password = password_input + salt
-    password_encrypted = BCrypt::Password.create(password)
-    create_new_user(username, password_encrypted)
-    redirect("/")
-
+  if username_exists(username) == []
+    if password_input == password_confirmation
+      password = password_input + salt
+      password_encrypted = BCrypt::Password.create(password)
+      create_new_user(username, password_encrypted)
+      redirect("/")
+    else
+      "The passwords do not match!"
+    end
   else
-    "The passwords do not match!"
+    "This username is taken."
   end
 end
 
