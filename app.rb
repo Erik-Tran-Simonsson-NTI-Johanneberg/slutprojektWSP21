@@ -11,7 +11,7 @@ include Model
 
 salt = "saltysaltysaltcandywithplentyofsalt"
 
-# Displays frontpage
+# Display Landing Page and all recipes
 # 
 # @see Model#select_everything_from_recipes
 get("/") do
@@ -19,10 +19,20 @@ get("/") do
   slim(:"index", locals:{recipes:recipes})
 end
 
+# Displays the create a new recipe page
+# 
 get("/recipe/new") do
   slim(:"recipe/new")
 end
 
+# Creates a new recipe and redirects to "/"
+# 
+# @param [String] recipe_name, The name of the recipe
+# @param [Integer] user_id, The ID of the user
+# @param [String] ingredients, The ingredients of the recipe
+# @param [String] instructions, The instructions of the recipe
+# 
+# @see Model#insert_intro_recipes
 post("/recipe") do
   recipe_name = params[:recipe_name]
   user_id = session[:user_id]
@@ -38,6 +48,12 @@ post("/recipe") do
   end
 end
 
+# Displays a single recipe and all of its likes
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# 
+# @see Model#select_everything_from_recipe_id
+# @see Model#select_all_user_ids_from_like_id
 get('/recipe/:id') do 
   recipe_id = params[:id].to_i
   all_data = select_everything_from_recipe_id(recipe_id)
@@ -45,12 +61,25 @@ get('/recipe/:id') do
   slim(:"recipe/show", locals:{all_data:all_data, all_likes:all_likes})
 end
 
+# Displays edit the current recipe page
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# 
+# @see Model#select_everything_from_recipe_id
 get('/recipe/:id/edit') do
   recipe_id = params[:id].to_i
   all_data = select_everything_from_recipe_id(recipe_id)
   slim(:"recipe/edit", locals:{all_data:all_data})
 end
 
+# Updates an existing recipe and redirects to "/"
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# @param [String] recipe_name, The name of the recipe
+# @param [String] ingredients, The ingredients of the recipe
+# @param [String] instructions, The instructions of the recipe
+# 
+# @see Model#update_recipes
 post("/recipe/:id/update") do
   recipe_id = params[:id].to_i
   recipe_name = params[:recipe_name]
@@ -66,28 +95,53 @@ post("/recipe/:id/update") do
   end
 end
 
-get("/recipe/:id/delete") do
+# Deletes an existing recipe and redirects to "/"
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# 
+# @see Model#delete_recipe
+post("/recipe/:id/delete") do
   recipe_id = params[:id].to_i
   delete_recipe(recipe_id)
   redirect('/')
 end
 
+# Likes an existing recipe and redirects back to the same page (refreshes the current page)
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# 
+# @see Model#add_like
 get("/recipe/:id/like") do
   recipe_id = params[:id].to_i
   add_like(recipe_id, session[:user_id])
   redirect(session[:redirect_link])
 end
 
+# Unlikes an existing recipe and redirects back to the same page (refreshes the current page)
+# 
+# @param [Integer] recipe_id, The ID of the recipe
+# 
+# @see Model#remove_like
 get("/recipe/:id/unlike") do
   recipe_id = params[:id].to_i
   remove_like(recipe_id, session[:user_id])
   redirect(session[:redirect_link])
 end
 
+# Displays a register form
+# 
 get("/user/new") do
   slim(:"user/new")
 end
 
+# Creates a new user and redirects to "/"
+# 
+# @param [String] username, The username of the user
+# @param [String] password_input, The inputed password of the user
+# @param [String] password_confirmation, The second inputed password of the user
+# 
+# @see Model#username_exists
+# @see Model#create_new_user
 post("/user") do
   username = params[:username]
   password_input = params[:password_input]
@@ -107,10 +161,19 @@ post("/user") do
   end
 end
 
+# Displays a login form
+# 
 get("/user/login") do
   slim(:"user/login")
 end
 
+# Attempts login and updates the session
+# 
+# @param [String] username, The username
+# @param [String] password_input, The inputed password
+# 
+# @see Model#username_exists
+# @see Model#select_user_information
 post("/user/login") do
   username = params[:username]
   password_input = params[:password_input]
@@ -135,6 +198,8 @@ post("/user/login") do
   end
 end
 
+# Logs out and destroys the session
+# 
 get("/user/logout") do
     session.destroy
   redirect("/")

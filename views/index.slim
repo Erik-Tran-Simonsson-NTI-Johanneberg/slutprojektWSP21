@@ -7,17 +7,18 @@
   h2
     a href="/recipe/new" Create a new recipe
 
+/ p #{recipes}
+
 ul
   - recipes.reverse_each do |recipe|
-    / h1 recipe #{recipe}
-    / h1 Current id is #{recipe['user_id']}
     li 
       h3
         a href="recipe/#{recipe['recipe_id']}" #{recipe["recipe_name"]}
       - if recipe['user_id'] == session[:user_id] || session[:admin] == "true"
         nav
           a href="recipe/#{recipe['recipe_id']}/edit" Uppdate recipe
-          a href="recipe/#{recipe['recipe_id']}/delete" Delete recipe
+          form method="post" action="recipe/#{recipe['recipe_id']}/delete"
+            input type="submit" value="Delete"
       - all_likes = select_all_user_ids_from_like_id(recipe['recipe_id'])
       p Current amount of likes: #{all_likes.length}
       - session[:redirect_link] = ""
