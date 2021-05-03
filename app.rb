@@ -1,7 +1,6 @@
 require "sinatra"
 require "slim"
 require "sqlite3"
-require "bcrypt"
 require 'date'
 require_relative "./model.rb"
 
@@ -36,7 +35,7 @@ end
 post("/recipe") do
   recipe_name = params[:recipe_name]
   user_id = session[:user_id]
-  date_created = Time.now.getutc.to_s
+  date_created = Time.now.to_s
   ingredients = params[:ingredients]
   instructions = params[:instructions]
 
@@ -83,7 +82,7 @@ end
 post("/recipe/:id/update") do
   recipe_id = params[:id].to_i
   recipe_name = params[:recipe_name]
-  date_updated = Time.now.getutc.to_s
+  date_updated = Time.now.to_s
   ingredients = params[:ingredients]
   instructions = params[:instructions] 
   
@@ -141,6 +140,7 @@ end
 # @param [String] password_confirmation, The second inputed password of the user
 # 
 # @see Model#username_exists
+# @see Model#encrypt_password
 # @see Model#create_new_user
 post("/user") do
   username = params[:username]
@@ -150,7 +150,7 @@ post("/user") do
   if username_exists(username) == []
     if password_input == password_confirmation
       password = password_input + salt
-      password_encrypted = BCrypt::Password.create(password)
+      password_encrypted = encrypt_password(password)
       create_new_user(username, password_encrypted)
       redirect("/")
     else
@@ -161,31 +161,41 @@ post("/user") do
   end
 end
 
-# Displays a login form
+# Displays a login form and controls that the user has not failed to many logins
 # 
 get("/user/login") do
-  slim(:"user/login")
+  if session[:next_attempt] != nil
+    if session[:next_attempt] - Time.now <= 0
+      session[:failed_attempts] = 0
+    else
+      time_left = session[:next_attempt] - Time.now
+    end
+  end
+  slim(:"user/login", locals:{time_left:time_left})
 end
 
-# Attempts login and updates the session
+# Attempts login and updates the session, the user can only attempt to login a limited amount of times
 # 
 # @param [String] username, The username
 # @param [String] password_input, The inputed password
 # 
 # @see Model#username_exists
+# @see Model#add_failed_attempt
 # @see Model#select_user_information
+# @see Model#decrypt_password
 post("/user/login") do
   username = params[:username]
   password_input = params[:password_input]
   password = password_input + salt
 
   if username_exists(username) == []
-    "Incorrect username or password, please try again."
+    add_failed_attempt()
   else
     user_information = select_user_information(username)
     user_id = user_information["user_id"]
     password_encrypted = user_information["password"]
-    if BCrypt::Password.new(password_encrypted) == password
+    if decrypt_password(password_encrypted) == password
+      session[:failed_attempts] == 0
       session[:user_id] = user_id
       session[:username] = username
       if user_information["is_admin"] == "true"
@@ -193,7 +203,7 @@ post("/user/login") do
       end
       redirect("/")
     else
-      "Incorrect username or password, please try again."
+      add_failed_attempt()
     end
   end
 end

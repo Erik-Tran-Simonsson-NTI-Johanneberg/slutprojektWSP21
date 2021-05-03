@@ -1,6 +1,10 @@
 h2 Log in
 
-form action="/user/login" method="post"
-    input type="text" name="username" placeholder="username"
-    input type="password" name="password_input" placeholder="password"
-    input type="submit" value="Login"
+- if session[:failed_attempts] == 3
+    p Please try again later.
+    p Time left is: #{time_left} seconds.
+- else
+    form action="/user/login" method="post"
+        input type="text" name="username" placeholder="username"
+        input type="password" name="password_input" placeholder="password"
+        input type="submit" value="Login"

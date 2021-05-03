@@ -272,7 +272,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Displays a login form.</p>
+<p>Displays a login form and controls that the user has not failed to many logins.</p>
 </div></span>
   
 </li>
@@ -440,7 +440,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Attempts login and updates the session.</p>
+<p>Attempts login and updates the session, the user can only attempt to login a limited amount of times.</p>
 </div></span>
   
 </li>
@@ -459,7 +459,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Model.html" title="Model (module)">Model</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Model.html#add_like-instance_method" title="Model#add_like (method)">#add_like</a></span>, <span class='object_link'><a href="Model.html#create_new_user-instance_method" title="Model#create_new_user (method)">#create_new_user</a></span>, <span class='object_link'><a href="Model.html#delete_recipe-instance_method" title="Model#delete_recipe (method)">#delete_recipe</a></span>, <span class='object_link'><a href="Model.html#get_db-instance_method" title="Model#get_db (method)">#get_db</a></span>, <span class='object_link'><a href="Model.html#get_db_as_hash-instance_method" title="Model#get_db_as_hash (method)">#get_db_as_hash</a></span>, <span class='object_link'><a href="Model.html#insert_into_recipes-instance_method" title="Model#insert_into_recipes (method)">#insert_into_recipes</a></span>, <span class='object_link'><a href="Model.html#remove_like-instance_method" title="Model#remove_like (method)">#remove_like</a></span>, <span class='object_link'><a href="Model.html#select_all_user_ids_from_like_id-instance_method" title="Model#select_all_user_ids_from_like_id (method)">#select_all_user_ids_from_like_id</a></span>, <span class='object_link'><a href="Model.html#select_everything_from_recipe_id-instance_method" title="Model#select_everything_from_recipe_id (method)">#select_everything_from_recipe_id</a></span>, <span class='object_link'><a href="Model.html#select_everything_from_recipes-instance_method" title="Model#select_everything_from_recipes (method)">#select_everything_from_recipes</a></span>, <span class='object_link'><a href="Model.html#select_user_information-instance_method" title="Model#select_user_information (method)">#select_user_information</a></span>, <span class='object_link'><a href="Model.html#update_recipes-instance_method" title="Model#update_recipes (method)">#update_recipes</a></span>, <span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">#username_exists</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Model.html#add_failed_attempt-instance_method" title="Model#add_failed_attempt (method)">#add_failed_attempt</a></span>, <span class='object_link'><a href="Model.html#add_like-instance_method" title="Model#add_like (method)">#add_like</a></span>, <span class='object_link'><a href="Model.html#create_new_user-instance_method" title="Model#create_new_user (method)">#create_new_user</a></span>, <span class='object_link'><a href="Model.html#decrypt_password-instance_method" title="Model#decrypt_password (method)">#decrypt_password</a></span>, <span class='object_link'><a href="Model.html#delete_recipe-instance_method" title="Model#delete_recipe (method)">#delete_recipe</a></span>, <span class='object_link'><a href="Model.html#encrypt_password-instance_method" title="Model#encrypt_password (method)">#encrypt_password</a></span>, <span class='object_link'><a href="Model.html#get_db-instance_method" title="Model#get_db (method)">#get_db</a></span>, <span class='object_link'><a href="Model.html#get_db_as_hash-instance_method" title="Model#get_db_as_hash (method)">#get_db_as_hash</a></span>, <span class='object_link'><a href="Model.html#insert_into_recipes-instance_method" title="Model#insert_into_recipes (method)">#insert_into_recipes</a></span>, <span class='object_link'><a href="Model.html#remove_like-instance_method" title="Model#remove_like (method)">#remove_like</a></span>, <span class='object_link'><a href="Model.html#select_all_user_ids_from_like_id-instance_method" title="Model#select_all_user_ids_from_like_id (method)">#select_all_user_ids_from_like_id</a></span>, <span class='object_link'><a href="Model.html#select_everything_from_recipe_id-instance_method" title="Model#select_everything_from_recipe_id (method)">#select_everything_from_recipe_id</a></span>, <span class='object_link'><a href="Model.html#select_everything_from_recipes-instance_method" title="Model#select_everything_from_recipes (method)">#select_everything_from_recipes</a></span>, <span class='object_link'><a href="Model.html#select_user_information-instance_method" title="Model#select_user_information (method)">#select_user_information</a></span>, <span class='object_link'><a href="Model.html#update_recipes-instance_method" title="Model#update_recipes (method)">#update_recipes</a></span>, <span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">#username_exists</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -501,13 +501,13 @@
       <pre class="lines">
 
 
+16
 17
 18
-19
-20</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 16</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipes'>recipes</span> <span class='op'>=</span> <span class='id identifier rubyid_select_everything_from_recipes'><span class='object_link'><a href="Model.html#select_everything_from_recipes-instance_method" title="Model#select_everything_from_recipes (method)">select_everything_from_recipes</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -575,15 +575,15 @@
       <pre class="lines">
 
 
+56
 57
 58
 59
 60
-61
-62</pre>
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 56</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/recipe/:id</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span> 
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -651,14 +651,14 @@
       <pre class="lines">
 
 
+68
 69
 70
 71
-72
-73</pre>
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 68</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/recipe/:id/edit</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -725,14 +725,14 @@
       <pre class="lines">
 
 
+113
 114
 115
 116
-117
-118</pre>
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 113</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/like</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -799,14 +799,14 @@
       <pre class="lines">
 
 
+124
 125
 126
 127
-128
-129</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 124</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/unlike</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -846,12 +846,12 @@
       <pre class="lines">
 
 
+23
 24
-25
-26</pre>
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 23</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/new</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;recipe/new&quot;</span><span class='rparen'>)</span>
@@ -873,7 +873,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Displays a login form</p>
+<p>Displays a login form and controls that the user has not failed to many logins</p>
 
 
   </div>
@@ -891,13 +891,27 @@
 
 166
 167
-168</pre>
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app.rb', line 166</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;user/login&quot;</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:next_attempt</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='kw'>nil</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:next_attempt</span><span class='rbracket'>]</span> <span class='op'>-</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span> <span class='op'>&lt;=</span> <span class='int'>0</span>
+      <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:failed_attempts</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='int'>0</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_time_left'>time_left</span> <span class='op'>=</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:next_attempt</span><span class='rbracket'>]</span> <span class='op'>-</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;user/login&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>time_left:</span><span class='id identifier rubyid_time_left'>time_left</span><span class='rbrace'>}</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -932,13 +946,13 @@
       <pre class="lines">
 
 
-203
-204
-205
-206</pre>
+213
+214
+215
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 203</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 213</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/logout</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_session'>session</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -977,12 +991,12 @@
       <pre class="lines">
 
 
+132
 133
-134
-135</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 132</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/new</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;user/new&quot;</span><span class='rparen'>)</span>
@@ -1095,6 +1109,7 @@
       <pre class="lines">
 
 
+35
 36
 37
 38
@@ -1107,16 +1122,15 @@
 45
 46
 47
-48
-49</pre>
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 35</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_name'>recipe_name</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:recipe_name</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_user_id'>user_id</span> <span class='op'>=</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_date_created'>date_created</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_getutc'>getutc</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_date_created'>date_created</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_ingredients'>ingredients</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:ingredients</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_instructions'>instructions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:instructions</span><span class='rbracket'>]</span>
 
@@ -1187,14 +1201,14 @@
       <pre class="lines">
 
 
+102
 103
 104
 105
-106
-107</pre>
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 102</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -1309,6 +1323,7 @@
       <pre class="lines">
 
 
+82
 83
 84
 85
@@ -1321,16 +1336,15 @@
 92
 93
 94
-95
-96</pre>
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 82</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/update</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
   <span class='id identifier rubyid_recipe_name'>recipe_name</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:recipe_name</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_date_updated'>date_updated</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_getutc'>getutc</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='id identifier rubyid_date_updated'>date_updated</span> <span class='op'>=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_ingredients'>ingredients</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:ingredients</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_instructions'>instructions</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:instructions</span><span class='rbracket'>]</span> 
   
@@ -1423,6 +1437,8 @@
     
       <li><span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">Model#username_exists</a></span></li>
     
+      <li><span class='object_link'><a href="Model.html#encrypt_password-instance_method" title="Model#encrypt_password (method)">Model#encrypt_password</a></span></li>
+    
       <li><span class='object_link'><a href="Model.html#create_new_user-instance_method" title="Model#create_new_user (method)">Model#create_new_user</a></span></li>
     
   </ul>
@@ -1465,7 +1481,7 @@
   <span class='kw'>if</span> <span class='id identifier rubyid_username_exists'><span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">username_exists</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
     <span class='kw'>if</span> <span class='id identifier rubyid_password_input'>password_input</span> <span class='op'>==</span> <span class='id identifier rubyid_password_confirmation'>password_confirmation</span>
       <span class='id identifier rubyid_password'>password</span> <span class='op'>=</span> <span class='id identifier rubyid_password_input'>password_input</span> <span class='op'>+</span> <span class='id identifier rubyid_salt'>salt</span>
-      <span class='id identifier rubyid_password_encrypted'>password_encrypted</span> <span class='op'>=</span> <span class='const'>BCrypt</span><span class='op'>::</span><span class='const'>Password</span><span class='period'>.</span><span class='id identifier rubyid_create'>create</span><span class='lparen'>(</span><span class='id identifier rubyid_password'>password</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_password_encrypted'>password_encrypted</span> <span class='op'>=</span> <span class='id identifier rubyid_encrypt_password'><span class='object_link'><a href="Model.html#encrypt_password-instance_method" title="Model#encrypt_password (method)">encrypt_password</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_password'>password</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_create_new_user'><span class='object_link'><a href="Model.html#create_new_user-instance_method" title="Model#create_new_user (method)">create_new_user</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='comma'>,</span> <span class='id identifier rubyid_password_encrypted'>password_encrypted</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_redirect'>redirect</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='kw'>else</span>
@@ -1492,7 +1508,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Attempts login and updates the session</p>
+<p>Attempts login and updates the session, the user can only attempt to login a limited amount of times</p>
 
 
   </div>
@@ -1541,7 +1557,11 @@
     
       <li><span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">Model#username_exists</a></span></li>
     
+      <li><span class='object_link'><a href="Model.html#add_failed_attempt-instance_method" title="Model#add_failed_attempt (method)">Model#add_failed_attempt</a></span></li>
+    
       <li><span class='object_link'><a href="Model.html#select_user_information-instance_method" title="Model#select_user_information (method)">Model#select_user_information</a></span></li>
+    
+      <li><span class='object_link'><a href="Model.html#decrypt_password-instance_method" title="Model#decrypt_password (method)">Model#decrypt_password</a></span></li>
     
   </ul>
 
@@ -1553,15 +1573,6 @@
       <pre class="lines">
 
 
-177
-178
-179
-180
-181
-182
-183
-184
-185
 186
 187
 188
@@ -1575,10 +1586,20 @@
 196
 197
 198
-199</pre>
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 177</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 186</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span>
@@ -1586,12 +1607,13 @@
   <span class='id identifier rubyid_password'>password</span> <span class='op'>=</span> <span class='id identifier rubyid_password_input'>password_input</span> <span class='op'>+</span> <span class='id identifier rubyid_salt'>salt</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_username_exists'><span class='object_link'><a href="Model.html#username_exists-instance_method" title="Model#username_exists (method)">username_exists</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Incorrect username or password, please try again.</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_add_failed_attempt'><span class='object_link'><a href="Model.html#add_failed_attempt-instance_method" title="Model#add_failed_attempt (method)">add_failed_attempt</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_user_information'>user_information</span> <span class='op'>=</span> <span class='id identifier rubyid_select_user_information'><span class='object_link'><a href="Model.html#select_user_information-instance_method" title="Model#select_user_information (method)">select_user_information</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_username'>username</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_user_id'>user_id</span> <span class='op'>=</span> <span class='id identifier rubyid_user_information'>user_information</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_password_encrypted'>password_encrypted</span> <span class='op'>=</span> <span class='id identifier rubyid_user_information'>user_information</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>password</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
-    <span class='kw'>if</span> <span class='const'>BCrypt</span><span class='op'>::</span><span class='const'>Password</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_password_encrypted'>password_encrypted</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_password'>password</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_decrypt_password'><span class='object_link'><a href="Model.html#decrypt_password-instance_method" title="Model#decrypt_password (method)">decrypt_password</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_password_encrypted'>password_encrypted</span><span class='rparen'>)</span> <span class='op'>==</span> <span class='id identifier rubyid_password'>password</span>
+      <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:failed_attempts</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='int'>0</span>
       <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_user_id'>user_id</span>
       <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_username'>username</span>
       <span class='kw'>if</span> <span class='id identifier rubyid_user_information'>user_information</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>is_admin</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
@@ -1599,7 +1621,7 @@
       <span class='kw'>end</span>
       <span class='id identifier rubyid_redirect'>redirect</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='kw'>else</span>
-      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Incorrect username or password, please try again.</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_add_failed_attempt'><span class='object_link'><a href="Model.html#add_failed_attempt-instance_method" title="Model#add_failed_attempt (method)">add_failed_attempt</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -1613,7 +1635,7 @@
 </div>
 
       <div id="footer">
-  Generated on Sat Apr 24 15:18:42 2021 by
+  Generated on Mon May  3 19:49:12 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.2).
 </div>

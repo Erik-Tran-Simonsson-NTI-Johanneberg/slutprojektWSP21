@@ -1,3 +1,5 @@
+require "bcrypt"
+
 module Model
 
     # Grants access to the database
@@ -61,10 +63,11 @@ module Model
         return get_db().execute("UPDATE recipes SET recipe_name = ?, date_updated = ?, ingredients = ?, instructions = ? WHERE recipe_id = ?", recipe_name, date_updated, ingredients, instructions, recipe_id)
     end
 
-    # Deletes a row from the recipes table
+    # Deletes a row from the recipes table and all the associated likes
     # 
     # @param [Integer] recipe_id, The ID of the recipe
     def delete_recipe(recipe_id)
+        get_db().execute("DELETE FROM likes WHERE recipe_id = ?", recipe_id)
         return get_db().execute("DELETE FROM recipes WHERE recipe_id = ?", recipe_id)
     end
 
@@ -102,9 +105,46 @@ module Model
     end
 
     # Controls if the username exists within a row in the users table
+    # 
     # @param [String] username, The username of the user
     def username_exists(username)
         return get_db_as_hash().execute("SELECT * FROM users WHERE username = ?", username)
+    end
+
+    # Logs a failed attempt at logging in
+    # 
+    # @return [String] a varying error massage
+    def add_failed_attempt()
+        if session[:failed_attempts] == nil
+            session[:failed_attempts] = 0
+        end
+        session[:failed_attempts] += 1
+        if session[:failed_attempts] == 1
+            return "Incorrect username or password, you have 2 more tries."
+        elsif session[:failed_attempts] == 2
+            return "Incorrect username or password, you have 1 more try."
+        elsif session[:failed_attempts] == 3
+            session[:next_attempt] = Time.now + (60 * 2)
+            return "Incorrect username or password, please try again in 2 minutes."
+        end
+    end    
+
+    # Encrypts the password
+    # 
+    # @param [String] password, The password of the user
+    # 
+    # @return [String] the encrypted password
+    def encrypt_password(password)
+        return BCrypt::Password.create(password)
+    end
+
+    # Decrypts the encrypted password
+    # 
+    # @param [String] encrypted password, The encrypted password of the user
+    # 
+    # @return [String] the decrypted password
+    def decrypt_password(password_encrypted)
+        return BCrypt::Password.new(password_encrypted)
     end
 
     # Outputs all data of a user
