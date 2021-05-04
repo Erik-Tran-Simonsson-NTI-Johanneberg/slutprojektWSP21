@@ -60,7 +60,7 @@ get('/recipe/:id') do
   slim(:"recipe/show", locals:{all_data:all_data, all_likes:all_likes})
 end
 
-# Displays edit the current recipe page
+# Displays edit the current recipe page if the user is the author
 # 
 # @param [Integer] recipe_id, The ID of the recipe
 # 
@@ -68,7 +68,13 @@ end
 get('/recipe/:id/edit') do
   recipe_id = params[:id].to_i
   all_data = select_everything_from_recipe_id(recipe_id)
-  slim(:"recipe/edit", locals:{all_data:all_data})
+  author_id = all_data["user_id"]
+  if author_id == session[:user_id] || session[:admin] == "true"
+    slim(:"recipe/edit", locals:{all_data:all_data})
+  else
+    "Can not edit a recipe you are not an author of."
+  end
+
 end
 
 # Updates an existing recipe and redirects to "/"
@@ -94,15 +100,21 @@ post("/recipe/:id/update") do
   end
 end
 
-# Deletes an existing recipe and redirects to "/"
+# Deletes an existing recipe if the user is the author and redirects to "/"
 # 
 # @param [Integer] recipe_id, The ID of the recipe
 # 
+# @see Model#select_everything_from_recipe_id
 # @see Model#delete_recipe
 post("/recipe/:id/delete") do
   recipe_id = params[:id].to_i
-  delete_recipe(recipe_id)
-  redirect('/')
+  author_id = select_everything_from_recipe_id(recipe_id)["user_id"]
+  if author_id == session[:user_id] || session[:admin] == "true"
+    delete_recipe(recipe_id)
+    redirect('/')
+  else
+    "Can not delete a recipe you are not an author of."
+  end
 end
 
 # Likes an existing recipe and redirects back to the same page (refreshes the current page)
