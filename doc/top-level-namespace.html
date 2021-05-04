@@ -176,7 +176,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Displays edit the current recipe page.</p>
+<p>Displays edit the current recipe page if the user is the author.</p>
 </div></span>
   
 </li>
@@ -368,7 +368,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Deletes an existing recipe and redirects to “/”.</p>
+<p>Deletes an existing recipe if the user is the author and redirects to “/”.</p>
 </div></span>
   
 </li>
@@ -608,7 +608,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Displays edit the current recipe page</p>
+<p>Displays edit the current recipe page if the user is the author</p>
 
 
   </div>
@@ -655,7 +655,13 @@
 69
 70
 71
-72</pre>
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app.rb', line 68</span>
@@ -663,7 +669,13 @@
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/recipe/:id/edit</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
   <span class='id identifier rubyid_all_data'>all_data</span> <span class='op'>=</span> <span class='id identifier rubyid_select_everything_from_recipe_id'><span class='object_link'><a href="Model.html#select_everything_from_recipe_id-instance_method" title="Model#select_everything_from_recipe_id (method)">select_everything_from_recipe_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_recipe_id'>recipe_id</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;recipe/edit&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>all_data:</span><span class='id identifier rubyid_all_data'>all_data</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_author_id'>author_id</span> <span class='op'>=</span> <span class='id identifier rubyid_all_data'>all_data</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_author_id'>author_id</span> <span class='op'>==</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:admin</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;recipe/edit&quot;</span><span class='comma'>,</span> <span class='label'>locals:</span><span class='lbrace'>{</span><span class='label'>all_data:</span><span class='id identifier rubyid_all_data'>all_data</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Can not edit a recipe you are not an author of.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -725,14 +737,14 @@
       <pre class="lines">
 
 
-113
-114
-115
-116
-117</pre>
+125
+126
+127
+128
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 125</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/like</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -799,14 +811,14 @@
       <pre class="lines">
 
 
-124
-125
-126
-127
-128</pre>
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 136</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/unlike</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -889,19 +901,19 @@
       <pre class="lines">
 
 
-166
-167
-168
-169
-170
-171
-172
-173
-174
-175</pre>
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 178</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:next_attempt</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='kw'>nil</span>
@@ -946,13 +958,13 @@
       <pre class="lines">
 
 
-213
-214
-215
-216</pre>
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 213</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 225</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/logout</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
     <span class='id identifier rubyid_session'>session</span><span class='period'>.</span><span class='id identifier rubyid_destroy'>destroy</span>
@@ -991,12 +1003,12 @@
       <pre class="lines">
 
 
-132
-133
-134</pre>
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 144</span>
 
 <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/new</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_slim'>slim</span><span class='lparen'>(</span><span class='symbol'>:&quot;user/new&quot;</span><span class='rparen'>)</span>
@@ -1158,7 +1170,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Deletes an existing recipe and redirects to “/”</p>
+<p>Deletes an existing recipe if the user is the author and redirects to “/”</p>
 
 
   </div>
@@ -1189,6 +1201,8 @@
   <p class="tag_title">See Also:</p>
   <ul class="see">
     
+      <li><span class='object_link'><a href="Model.html#select_everything_from_recipe_id-instance_method" title="Model#select_everything_from_recipe_id (method)">Model#select_everything_from_recipe_id</a></span></li>
+    
       <li><span class='object_link'><a href="Model.html#delete_recipe-instance_method" title="Model#delete_recipe (method)">Model#delete_recipe</a></span></li>
     
   </ul>
@@ -1201,19 +1215,29 @@
       <pre class="lines">
 
 
-102
-103
-104
-105
-106</pre>
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 109</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/delete</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
-  <span class='id identifier rubyid_delete_recipe'><span class='object_link'><a href="Model.html#delete_recipe-instance_method" title="Model#delete_recipe (method)">delete_recipe</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_recipe_id'>recipe_id</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_redirect'>redirect</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_author_id'>author_id</span> <span class='op'>=</span> <span class='id identifier rubyid_select_everything_from_recipe_id'><span class='object_link'><a href="Model.html#select_everything_from_recipe_id-instance_method" title="Model#select_everything_from_recipe_id (method)">select_everything_from_recipe_id</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_recipe_id'>recipe_id</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_author_id'>author_id</span> <span class='op'>==</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:user_id</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:admin</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>true</span><span class='tstring_end'>&quot;</span></span>
+    <span class='id identifier rubyid_delete_recipe'><span class='object_link'><a href="Model.html#delete_recipe-instance_method" title="Model#delete_recipe (method)">delete_recipe</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_recipe_id'>recipe_id</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect'>redirect</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Can not delete a recipe you are not an author of.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1323,12 +1347,6 @@
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
 88
 89
 90
@@ -1336,10 +1354,16 @@
 92
 93
 94
-95</pre>
+95
+96
+97
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 88</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/recipe/:id/update</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_recipe_id'>recipe_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span>
@@ -1451,27 +1475,27 @@
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
 157
 158
 159
 160
 161
-162</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 157</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span>
@@ -1573,18 +1597,6 @@
       <pre class="lines">
 
 
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
 198
 199
 200
@@ -1596,10 +1608,22 @@
 206
 207
 208
-209</pre>
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app.rb', line 186</span>
+      <pre class="code"><span class="info file"># File 'app.rb', line 198</span>
 
 <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/user/login</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
   <span class='id identifier rubyid_username'>username</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='symbol'>:username</span><span class='rbracket'>]</span>
@@ -1635,7 +1659,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May  3 19:49:12 2021 by
+  Generated on Tue May  4 21:05:11 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.2).
 </div>
