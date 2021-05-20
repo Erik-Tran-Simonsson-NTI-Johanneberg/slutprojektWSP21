@@ -10,6 +10,25 @@ include Model
 
 salt = "saltysaltysaltcandywithplentyofsalt"
 
+
+# Logs a failed attempt at logging in
+# 
+# @return [String] a varying error massage
+def add_failed_attempt()
+  if session[:failed_attempts] == nil
+      session[:failed_attempts] = 0
+  end
+  session[:failed_attempts] += 1
+  session[:next_attempt] = Time.now + (60 * 2)
+  if session[:failed_attempts] == 1
+      return "Incorrect username or password, you have 2 more tries."
+  elsif session[:failed_attempts] == 2
+      return "Incorrect username or password, you have 1 more try."
+  elsif session[:failed_attempts] == 3
+      return "Incorrect username or password, please try again in 2 minutes."
+  end
+end
+
 # Display Landing Page and all recipes
 # 
 # @see Model#select_everything_from_recipes
@@ -192,7 +211,6 @@ end
 # @param [String] password_input, The inputed password
 # 
 # @see Model#username_exists
-# @see Model#add_failed_attempt
 # @see Model#select_user_information
 # @see Model#decrypt_password
 post("/user/login") do

@@ -111,24 +111,6 @@ module Model
         return get_db_as_hash().execute("SELECT * FROM users WHERE username = ?", username)
     end
 
-    # Logs a failed attempt at logging in
-    # 
-    # @return [String] a varying error massage
-    def add_failed_attempt()
-        if session[:failed_attempts] == nil
-            session[:failed_attempts] = 0
-        end
-        session[:failed_attempts] += 1
-        session[:next_attempt] = Time.now + (60 * 2)
-        if session[:failed_attempts] == 1
-            return "Incorrect username or password, you have 2 more tries."
-        elsif session[:failed_attempts] == 2
-            return "Incorrect username or password, you have 1 more try."
-        elsif session[:failed_attempts] == 3
-            return "Incorrect username or password, please try again in 2 minutes."
-        end
-    end    
-
     # Encrypts the password
     # 
     # @param [String] password, The password of the user
